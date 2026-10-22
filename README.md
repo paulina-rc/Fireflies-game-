@@ -1,137 +1,96 @@
-# Luciérnagas
+# Fireflies 
 
-Juego para computadora hecho en Python con Kivy. Eres un espíritu de luz que vuela
-sobre un estanque de noche. Tienes que juntar luciérnagas en una cola que te sigue
-como una serpiente de luz, llevarlas al nido y esquivar a los murciélagos.
+A computer game made with Python and Kivy. You play as a tiny light spirit
+flying over a pond at night. Catch fireflies, lead them home to the nest, and try not to
+get caught by the bats
 
-Todo se dibuja con el canvas de Kivy: el juego no usa imágenes ni sonidos externos.
+Everything you see is drawn with code, so the game doesn't use any images or sound files.
 
-## Instalación
+## Controls
 
-Necesitas Python 3.10 o más nuevo.
-
-1. (Opcional) Crea y activa un entorno virtual:
-   ```bash
-   python -m venv venv
-   venv\Scripts\activate        # Windows
-   source venv/bin/activate     # macOS / Linux
-   ```
-2. Instala las dependencias:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Ejecuta el juego:
-   ```bash
-   python main.py
-   ```
-
-## Controles
-
-| Tecla | Acción |
+| Key | What it does |
 |---|---|
-| W A S D o flechas | Moverse |
-| Espacio | Impulso (dash) |
-| Esc | Pausar / continuar (en "Cómo jugar", vuelve al menú) |
-| F11 | Pantalla completa |
+| W A S D or arrow keys | Move |
+| Space | Dash |
+| Esc | Pause / resume (goes back to the menu from "How to play") |
+| F11 | Fullscreen |
 
-El mouse solo se usa en los menús.
+You only need the mouse for the menus.
 
-## Cómo jugar
+## How to play
 
-- **Luciérnagas:** tócalas para sumarlas a tu cola (máximo 15).
-- **Nido:** entra con tu cola para entregarlas. Puntos = luciérnagas × multiplicador
-  (5 o más: x2, 10 o más: x3).
-- **Murciélagos:** te persiguen. Si te tocan y tienes cola, la cola se dispersa;
-  si no tienes cola, pierdes una vida. Tienes 3 vidas.
-- **Dash:** un impulso rápido que atraviesa murciélagos sin daño. Se recarga en 2 segundos.
-- **Power-ups** (duran 6 s en el mapa):
-  - Luna azul: congela a los murciélagos por 4 s.
-  - Estrella dorada: imán, las luciérnagas cercanas vuelan hacia ti por 5 s.
-  - Corazón: +1 vida (máximo 3).
-- **Noches:** cada noche tiene una meta (Noche 1: 10 luciérnagas, y +5 por noche).
-  Al cumplirla empieza la siguiente noche, con un murciélago más, murciélagos más
-  rápidos y el nido en otro lugar. Desde la Noche 4 aparece la **luciérnaga fugaz**,
-  que huye de ti y vale el triple.
-- El juego termina al perder las 3 vidas. El récord (puntaje y noche máxima) se guarda solo.
+- **Fireflies:** touch them and they'll start following you in a glowing line (up to 15).
+- **The nest:** fly into it to drop off your fireflies and get points. The longer your
+  line, the better: 5 or more gives you x2 points, 10 or more gives you x3.
+- **Bats:** they chase you around. If one hits you while you have fireflies, they all
+  scatter and you have to catch them again. If you have none, you lose a life.
+  You get 3 lives.
+- **Dash:** a quick burst of speed that lets you fly right through bats. It recharges
+  in 2 seconds.
+- **Power-ups** (they disappear after 6 seconds, so be quick):
+  - Blue moon: freezes the bats for 4 seconds.
+  - Golden star: works like a magnet, pulling nearby fireflies to you for 5 seconds.
+  - Heart: gives you one extra life (max 3).
+- **Nights:** each night has a goal (Night 1 is 10 fireflies, then 5 more each night).
+  Reach it and a new night starts, with one more bat, faster bats, and the nest in a
+  new spot. From Night 4 on, watch out for the **shooting firefly**: it runs away
+  from you, but it's worth triple points.
+- The game ends when you lose all 3 lives. Your best score and highest night are saved
+  automatically.
 
-## Estructura del proyecto
+## What's in the project
 
 ```
-├── main.py                  # Solo arranca la app
-├── requirements.txt         # Dependencias (Kivy)
+├── main.py                  # Starts the game
+├── requirements.txt         # What you need to install (Kivy)
 ├── .gitignore
 ├── README.md
-├── game/                    # Todo el código del juego
-│   ├── app.py               # FirefliesApp: ScreenManager, F11 y récord
-│   ├── config.py            # TODOS los valores ajustables
-│   ├── drawing.py           # Ayudas de colores y dibujos (círculo, corazón)
-│   ├── entities/            # Lo que se mueve en el mapa
-│   │   ├── player.py        # Player: espíritu de luz, aceleración, dash y estela
-│   │   ├── firefly.py       # Firefly: estados libre, cola, dispersa y entregando
-│   │   ├── bat.py           # Bat: persigue al jugador girando poco a poco
-│   │   ├── nest.py          # Nest: donde se entregan las luciérnagas
-│   │   └── powerup.py       # PowerUp: luna, estrella y corazón
-│   ├── effects/             # Efectos visuales
-│   │   ├── particles.py     # Chispas, texto flotante de puntos y anillos
-│   │   └── camera.py        # Sacudida de pantalla
-│   ├── systems/             # Reglas y lógica sin dibujo
-│   │   ├── collisions.py    # Colisiones por distancia
-│   │   ├── levels.py        # LevelManager: noches, metas y dificultad
-│   │   ├── keyboard_input.py# Teclas presionadas, dirección y dash
-│   │   └── highscores.py    # Guardar y cargar el récord (JsonStore)
-│   ├── screens/             # Las pantallas (la lógica)
-│   │   ├── base.py          # Pantalla base con bucle a 60 FPS y carga de .kv
+├── game/                    # All the game code
+│   ├── app.py               # Sets up the app, screens and fullscreen
+│   ├── config.py            # All the numbers you can tweak
+│   ├── drawing.py           # Helpers for colors and shapes
+│   ├── entities/            # Everything that moves around
+│   │   ├── player.py        # The light spirit
+│   │   ├── firefly.py       # The fireflies
+│   │   ├── bat.py           # The bats
+│   │   ├── nest.py          # Where you drop off the fireflies
+│   │   └── powerup.py       # Moon, star and heart
+│   ├── effects/             # Eye candy
+│   │   ├── particles.py     # Sparkles and floating points
+│   │   └── camera.py        # Screen shake
+│   ├── systems/             # The game rules
+│   │   ├── collisions.py    # Checks when things touch
+│   │   ├── levels.py        # Nights, goals and difficulty
+│   │   ├── keyboard_input.py# Reads the keyboard
+│   │   └── highscores.py    # Saves your best score
+│   ├── screens/             # Each screen of the game
+│   │   ├── base.py
 │   │   ├── menu.py
 │   │   ├── how_to_play.py
-│   │   ├── game_screen.py   # Pantalla de juego y bucle principal
+│   │   ├── game_screen.py   # Where the actual game happens
 │   │   └── game_over.py
-│   ├── ui/                  # Widgets de interfaz
-│   │   ├── background.py    # Cielo con degradado, estrellas, agua y juncos
-│   │   ├── buttons.py       # Botón redondeado con hover
-│   │   ├── hud.py           # Vidas, puntaje, meta y enfriamiento del dash
-│   │   ├── labels.py        # Etiqueta de texto con el estilo del juego
-│   │   ├── keys.py          # Teclas dibujadas del panel de controles
-│   │   ├── overlays.py      # Menú de pausa y cartel "Noche N"
-│   │   └── decorations.py   # Luciérnagas de adorno y vitrinas de "Cómo jugar"
-│   └── kv/                  # Diseño de las pantallas en lenguaje KV
+│   ├── ui/                  # Buttons, HUD and other pieces of the interface
+│   │   ├── background.py    # Night sky, stars, water and reeds
+│   │   ├── buttons.py
+│   │   ├── hud.py           # Lives, score and dash meter
+│   │   ├── labels.py
+│   │   ├── keys.py          # The little keys in the controls panel
+│   │   ├── overlays.py      # Pause menu and "Night N" banner
+│   │   └── decorations.py   # Decorative fireflies
+│   └── kv/                  # Screen layouts (Kivy's design language)
 │       ├── menu.kv
 │       ├── how_to_play.kv
-│       ├── game_screen.kv   # Capas del juego, HUD, pausa y cartel de noche
+│       ├── game_screen.kv
 │       └── game_over.kv
-└── tests/                   # Pruebas con unittest (no abren ventana)
+└── tests/                   # Simple tests
     ├── test_collisions.py
     └── test_levels.py
 ```
 
-**Cómo se reparte el trabajo:**
+## Tests
 
-- **Python vs. KV:** los archivos `.kv` dicen *dónde* va cada cosa (botones, textos,
-  tamaños, posiciones). Los archivos `.py` dicen *qué hace*. Cada pantalla carga su
-  `.kv` con `Builder.load_file`.
-- **config.py:** si quieres cambiar algo del juego (velocidades, metas, colores,
-  duración de los power-ups...) se cambia ahí, no en el código. Las medidas están
-  en dp y los tiempos en segundos.
-- **Entidades:** no son widgets. Cada una agrupa sus dibujos en un `InstructionGroup`
-  y lo agrega a una capa; es más liviano que un widget por luciérnaga.
-
-**Ideas principales:**
-
-- **Bucle del juego:** `GameScreen.loop(dt)` se ejecuta 60 veces por segundo con
-  `Clock.schedule_interval`. Todo movimiento se multiplica por `dt`, así el juego va
-  a la misma velocidad aunque cambien los FPS. Al pausar o salir, el Clock se cancela.
-- **Teclado:** `KeyboardInput` usa `Window.bind(on_key_down, on_key_up)` y guarda en un
-  `set` las teclas presionadas. Se desvincula al salir de la pantalla de juego.
-- **Colisiones:** dos círculos chocan si la distancia entre sus centros es menor que
-  la suma de sus radios (`math.hypot`).
-- **Cola:** cada luciérnaga se acerca con interpolación a la anterior (la primera
-  sigue al jugador), quedando siempre a la misma distancia.
-- **Sacudida:** el fondo y el juego están dentro de un widget con un `Translate`
-  que se mueve unos píxeles al azar cuando te golpean. El HUD no se mueve.
-
-## Pruebas
-
-Las pruebas revisan las colisiones y las reglas de las noches (metas, cantidad y
-velocidad de murciélagos, multiplicadores). No abren ninguna ventana:
+The tests check that collisions and the night rules work properly. They don't open
+any window:
 
 ```bash
 python -m unittest discover tests
