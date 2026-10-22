@@ -1,0 +1,141 @@
+#:kivy 2.3
+# Diseño del menú principal (MenuScreen) y del panel de controles.
+# La lógica está en game/screens/menu.py.
+#:import config game.config
+
+<MenuScreen>:
+    FloatLayout:
+        NightBackground:
+            id: background
+            moon_pos: config.MOON_POS_MENU
+        DecorativeSwarm:
+            id: swarm
+
+        # --- Columna izquierda ---
+        TextLabel:
+            text: config.APP_TITLE
+            font_size: sp(76)
+            color: config.YELLOW + (1,)
+            bold: True
+            size_hint: 0.55, 0.15
+            pos_hint: {'center_x': 0.3, 'center_y': 0.71}
+        TextLabel:
+            text: 'Guía la luz de vuelta a casa'
+            font_size: sp(20)
+            color: config.CREAM + (0.8,)
+            size_hint: 0.55, 0.06
+            pos_hint: {'center_x': 0.3, 'center_y': 0.61}
+        RoundedButton:
+            text: 'Jugar'
+            primary: True
+            font_size: sp(24)
+            size_hint: None, None
+            size: dp(300), dp(62)
+            pos_hint: {'center_x': 0.3, 'center_y': 0.47}
+            on_release: root.go_to(config.SCREEN_GAME)
+        RoundedButton:
+            text: 'Cómo jugar'
+            size_hint: None, None
+            size: dp(300), dp(56)
+            pos_hint: {'center_x': 0.3, 'center_y': 0.37}
+            on_release: root.go_to(config.SCREEN_HOW_TO_PLAY)
+        TextLabel:
+            id: record_label
+            font_size: sp(18)
+            color: config.CREAM + (0.9,)
+            size_hint: 0.55, 0.05
+            pos_hint: {'center_x': 0.3, 'center_y': 0.27}
+
+        # --- Columna derecha ---
+        ControlsPanel:
+            pos_hint: {'center_x': 0.73, 'center_y': 0.52}
+
+
+# Fila del panel: dibujo de las teclas a la izquierda y texto a la derecha.
+<ControlsRow@BoxLayout>:
+    spacing: dp(14)
+    size_hint_y: None
+    height: dp(config.KEY_SIZE)
+
+<ControlsText@TextLabel>:
+    font_size: sp(16)
+    halign: 'left'
+
+<ControlsPanel>:
+    orientation: 'vertical'
+    padding: dp(24)
+    spacing: dp(16)
+    size_hint: None, None
+    size: dp(500), dp(330)
+    canvas.before:
+        Color:
+            rgba: config.PANEL_COLOR
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(18)]
+        Color:
+            rgba: config.CREAM + (0.15,)
+        Line:
+            width: dp(1)
+            rounded_rectangle: self.x, self.y, self.width, self.height, dp(18)
+
+    TextLabel:
+        text: 'Controles'
+        font_size: sp(20)
+        bold: True
+        halign: 'left'
+        size_hint_y: None
+        height: dp(28)
+
+    ControlsRow:
+        height: dp(94)
+        KeyCluster:
+            KeyGap:
+            KeyCap:
+                text: 'W'
+            KeyGap:
+            KeyCap:
+                text: 'A'
+            KeyCap:
+                text: 'S'
+            KeyCap:
+                text: 'D'
+        TextLabel:
+            text: 'o'
+            font_size: sp(15)
+            color: config.CREAM + (0.6,)
+            size_hint_x: None
+            width: dp(16)
+        KeyCluster:
+            KeyGap:
+            KeyCap:
+                arrow: 'up'
+            KeyGap:
+            KeyCap:
+                arrow: 'left'
+            KeyCap:
+                arrow: 'down'
+            KeyCap:
+                arrow: 'right'
+        ControlsText:
+            text: 'Moverse'
+
+    ControlsRow:
+        KeyCap:
+            text: 'Espacio'
+            width_units: 4.4
+        ControlsText:
+            text: 'Impulso (dash)'
+
+    ControlsRow:
+        KeyCap:
+            text: 'Esc'
+            width_units: 1.3
+        ControlsText:
+            text: 'Pausa'
+        KeyCap:
+            text: 'F11'
+            width_units: 1.3
+        ControlsText:
+            text: 'Pantalla completa'

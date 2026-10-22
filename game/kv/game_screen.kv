@@ -1,0 +1,154 @@
+#:kivy 2.3
+# Diseño de la pantalla de juego (GameScreen): capas del mundo, HUD,
+# cartel de noche y menú de pausa. La lógica está en
+# game/screens/game_screen.py y game/ui/hud.py.
+#:import config game.config
+
+<GameScreen>:
+    FloatLayout:
+        id: root_layout
+        # El "mundo": fondo + elementos del juego. Es lo único que se
+        # sacude cuando golpean al jugador.
+        FloatLayout:
+            id: world
+            NightBackground:
+                id: background
+            Widget:
+                id: game_layer
+        HUD:
+            id: hud
+        NightBanner:
+            id: banner
+
+
+# Texto pequeño y semitransparente del HUD
+<HudText@TextLabel>:
+    font_size: sp(14)
+    halign: 'left'
+    size_hint: 0.3, None
+
+<HUD>:
+    # --- Izquierda: vidas y progreso de la noche ---
+    BoxLayout:
+        id: lives_box
+        spacing: dp(8)
+        size_hint: None, None
+        size: dp(config.MAX_LIVES * 30 + (config.MAX_LIVES - 1) * 8), dp(30)
+        pos_hint: {'x': 0.02, 'top': 0.965}
+    HudText:
+        id: night_label
+        text: 'NOCHE 1'
+        font_size: sp(20)
+        bold: True
+        height: dp(28)
+        pos_hint: {'x': 0.02, 'top': 0.905}
+    HudText:
+        id: goal_label
+        color: config.CREAM + (0.75,)
+        height: dp(20)
+        pos_hint: {'x': 0.02, 'top': 0.86}
+    GoalBar:
+        id: goal_bar
+        size_hint: 0.15, None
+        height: dp(6)
+        pos_hint: {'x': 0.02, 'top': 0.825}
+
+    # --- Centro: puntaje, cola y power-ups activos ---
+    TextLabel:
+        id: score_label
+        text: '0'
+        font_size: sp(42)
+        bold: True
+        size_hint: 0.3, None
+        height: dp(52)
+        pos_hint: {'center_x': 0.5, 'top': 0.985}
+    TextLabel:
+        id: tail_label
+        font_size: sp(15)
+        color: config.CREAM + (0.85,)
+        size_hint: 0.4, None
+        height: dp(22)
+        pos_hint: {'center_x': 0.5, 'top': 0.905}
+    TextLabel:
+        id: status_label
+        font_size: sp(14)
+        size_hint: 0.5, None
+        height: dp(20)
+        pos_hint: {'center_x': 0.5, 'top': 0.87}
+
+    # --- Derecha: enfriamiento del dash ---
+    BoxLayout:
+        spacing: dp(12)
+        size_hint: None, None
+        size: dp(200), dp(66)
+        pos_hint: {'right': 0.975, 'top': 0.965}
+        TextLabel:
+            text: 'IMPULSO\n[size=%d]tecla Espacio[/size]' % int(sp(12))
+            font_size: sp(14)
+            color: config.CREAM + (0.7,)
+            halign: 'right'
+        DashIndicator:
+            id: dash_indicator
+            size_hint: None, None
+            size: dp(66), dp(66)
+
+
+<NightBanner>:
+    opacity: 0
+    canvas.before:
+        Color:
+            rgba: config.BANNER_VEIL_COLOR
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    TextLabel:
+        id: title
+        font_size: sp(64)
+        color: config.YELLOW + (1,)
+        bold: True
+        size_hint: 1, None
+        height: dp(80)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+    TextLabel:
+        id: subtitle
+        font_size: sp(19)
+        color: config.CREAM + (0.85,)
+        size_hint: 1, None
+        height: dp(30)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.45}
+
+
+<PauseOverlay>:
+    canvas.before:
+        Color:
+            rgba: config.PAUSE_VEIL_COLOR
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    TextLabel:
+        text: 'Pausa'
+        font_size: sp(48)
+        bold: True
+        size_hint: 1, None
+        height: dp(60)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.64}
+    TextLabel:
+        text: 'Presiona Esc para continuar'
+        font_size: sp(15)
+        color: config.CREAM + (0.6,)
+        size_hint: 1, None
+        height: dp(24)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.57}
+    RoundedButton:
+        text: 'Continuar'
+        primary: True
+        size_hint: None, None
+        size: dp(260), dp(56)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.46}
+        on_release: root.dispatch('on_resume')
+    RoundedButton:
+        text: 'Menú'
+        size_hint: None, None
+        size: dp(260), dp(56)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.36}
+        on_release: root.dispatch('on_menu')

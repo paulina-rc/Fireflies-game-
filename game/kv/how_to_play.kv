@@ -1,0 +1,37 @@
+#:kivy 2.3
+# Diseño de la pantalla "Cómo jugar" (HowToPlayScreen).
+# Las filas de la grilla se agregan desde game/screens/how_to_play.py.
+#:import config game.config
+
+<HowToPlayScreen>:
+    FloatLayout:
+        NightBackground:
+            id: background
+            moon_pos: config.MOON_POS_HOW_TO_PLAY
+        TextLabel:
+            text: 'Cómo jugar'
+            font_size: sp(44)
+            color: config.YELLOW + (1,)
+            bold: True
+            size_hint: 1, 0.1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.91}
+        GridLayout:
+            id: grid
+            cols: 2
+            spacing: dp(40), dp(10)
+            size_hint: 0.9, 0.68
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        RoundedButton:
+            text: 'Volver'
+            size_hint: None, None
+            size: dp(220), dp(52)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.08}
+            on_release: root.go_to(config.SCREEN_MENU)
+
+<ShowcaseRow>:
+    spacing: dp(18)
+    TextLabel:
+        text: root.text
+        font_size: sp(15)
+        color: config.CREAM + (0.9,)
+        halign: 'left'

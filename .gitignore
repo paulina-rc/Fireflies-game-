@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Entornos virtuales
+venv/
+.venv/
+env/
+
+# Editores
+.vscode/
+.idea/
+
+# Récord del juego (normalmente se guarda en la carpeta de datos del usuario)
+record.json
+.luciernagas.ini

@@ -1,0 +1,66 @@
+#:kivy 2.3
+# Diseño de la pantalla de fin de partida (GameOverScreen).
+# La lógica está en game/screens/game_over.py.
+#:import config game.config
+
+<GameOverScreen>:
+    FloatLayout:
+        NightBackground:
+            id: background
+        DecorativeSwarm:
+            id: swarm
+
+        TextLabel:
+            text: 'Fin de la partida'
+            font_size: sp(26)
+            color: config.CREAM + (0.8,)
+            size_hint: 1, 0.06
+            pos_hint: {'center_x': 0.5, 'center_y': 0.82}
+        TextLabel:
+            id: score_label
+            text: '0'
+            font_size: sp(96)
+            color: config.YELLOW + (1,)
+            bold: True
+            size_hint: 1, 0.15
+            pos_hint: {'center_x': 0.5, 'center_y': 0.69}
+        TextLabel:
+            text: 'puntos'
+            font_size: sp(16)
+            color: config.CREAM + (0.6,)
+            size_hint: 1, 0.04
+            pos_hint: {'center_x': 0.5, 'center_y': 0.595}
+        TextLabel:
+            id: detail_label
+            font_size: sp(19)
+            color: config.CREAM + (0.9,)
+            size_hint: 1, 0.05
+            pos_hint: {'center_x': 0.5, 'center_y': 0.52}
+        TextLabel:
+            id: new_record_label
+            text: '¡Nuevo récord!'
+            font_size: sp(28)
+            color: config.GOLD + (1,)
+            bold: True
+            size_hint: 1, 0.06
+            pos_hint: {'center_x': 0.5, 'center_y': 0.445}
+        TextLabel:
+            id: record_label
+            font_size: sp(16)
+            color: config.CREAM + (0.75,)
+            size_hint: 1, 0.04
+            pos_hint: {'center_x': 0.5, 'center_y': 0.385}
+
+        RoundedButton:
+            text: 'Otra vez'
+            primary: True
+            size_hint: None, None
+            size: dp(240), dp(58)
+            pos_hint: {'center_x': 0.4, 'center_y': 0.26}
+            on_release: root.go_to(config.SCREEN_GAME)
+        RoundedButton:
+            text: 'Menú'
+            size_hint: None, None
+            size: dp(240), dp(58)
+            pos_hint: {'center_x': 0.6, 'center_y': 0.26}
+            on_release: root.go_to(config.SCREEN_MENU)
