@@ -6,38 +6,6 @@ get caught by the bats
 
 Everything you see is drawn with code, so the game doesn't use any images or sound files.
 
-## Controls
-
-| Key | What it does |
-|---|---|
-| W A S D or arrow keys | Move |
-| Space | Dash |
-| Esc | Pause / resume (goes back to the menu from "How to play") |
-| F11 | Fullscreen |
-
-You only need the mouse for the menus.
-
-## How to play
-
-- **Fireflies:** touch them and they'll start following you in a glowing line (up to 15).
-- **The nest:** fly into it to drop off your fireflies and get points. The longer your
-  line, the better: 5 or more gives you x2 points, 10 or more gives you x3.
-- **Bats:** they chase you around. If one hits you while you have fireflies, they all
-  scatter and you have to catch them again. If you have none, you lose a life.
-  You get 3 lives.
-- **Dash:** a quick burst of speed that lets you fly right through bats. It recharges
-  in 2 seconds.
-- **Power-ups** (they disappear after 6 seconds, so be quick):
-  - Blue moon: freezes the bats for 4 seconds.
-  - Golden star: works like a magnet, pulling nearby fireflies to you for 5 seconds.
-  - Heart: gives you one extra life (max 3).
-- **Nights:** each night has a goal (Night 1 is 10 fireflies, then 5 more each night).
-  Reach it and a new night starts, with one more bat, faster bats, and the nest in a
-  new spot. From Night 4 on, watch out for the **shooting firefly**: it runs away
-  from you, but it's worth triple points.
-- The game ends when you lose all 3 lives. Your best score and highest night are saved
-  automatically.
-
 ## What's in the project
 
 ```
@@ -87,11 +55,9 @@ You only need the mouse for the menus.
     └── test_levels.py
 ```
 
-## Tests
+## Author
 
-The tests check that collisions and the night rules work properly. They don't open
-any window:
+**Paulina Rojas** — [@paulina-rc](https://github.com/paulina-rc)
 
-```bash
-python -m unittest discover tests
-```
+## License
+License. See [LICENSE](LICENSE) for details.
